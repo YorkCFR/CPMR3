@@ -1,0 +1,5 @@
+<launch>
+  <param name="robot_description" command="$(find xacro)/xacro name:='imu_robot' '$(find cpmr_ch4)/urdf/scout-imu.urdf.xacro'" />
+  <node name="rsp" type="robot_state_publisher" pkg="robot_state_publisher" />
+  <node name="spawn_urdf" pkg="gazebo_ros" type="spawn_model" args="-unpause -param robot_description -urdf -model imu_robot "/>
+</launch>

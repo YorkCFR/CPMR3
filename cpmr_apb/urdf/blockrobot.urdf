@@ -1,0 +1,135 @@
+<?xml version="1.0"?>
+<!-- 
+	This is a very simple robot designed to help explore how ROS and Gazebo
+	can interact to simulate a very simple (point) robot.
+
+	The robot consists of a block 10cm x 10cm x 5cm high with the density of copper (9.0 g/cc)
+        Given the size of the block it has a mass of 4.5 kg
+	
+        Diagonal elements of the moments of inertia are 
+          Ixx = 1/12 * M * (h^2+d^2) = 1/12 * 4.5 * (0.05^2+0.1^2) = 4.6875x 10^-3
+          Iyy = 1/12 * M * (h^2+w^2) = 1/12 * 4.5 * (0.05^2+0.1^2) = 4.6875x 10^-3
+          Izz = 1/12 * M * (w^2+d^2) = 1/12 * 4.5 = (0.1^2+0.1^2) = 7.5x 10-3
+	Mounted on top of this is a cylinder r=5cm h=5cm which simulates a LIDAR with one sample every degree
+
+	This cylinder is (almost) massless (0.01 kg)
+
+        Diagonal elements of the moments of inertia are 
+          Ixx = 1/12 * M * h^2 + 1/4 * M * r^2 = 1/12 * 0.01 * 0.05^2 + 1/4 * 0.01 * 0.05^2 = 2.0833x10^-6 + 6.25x10^-6 = 8.3383x10^-6
+          Iyy = 1/12 * M * h^2 + 1/4 * M * r^2 = 1/12 * 0.01 * 0.05^2 + 1/4 * 0.01 * 0.05^2 = 2.0833x10^-6 + 6.25x10^-6 = 8.3383x10^-6
+          Izz = 1/2 * M * r^2 = 1/2 * 0.01 * 0.01 * 0.05^2 = 1.25x 10^-7
+
+	The robot is equipped with one LIDAR with 360 samples (one per degree) from -180 to +179
+
+	Version 1.1.
+	Copyright (c) Michael Jenkin and Gregory Dudek.
+
+	-->
+
+<robot name="block_robot">
+  <material name="red">
+    <color rgba="1 0 0 1"/>
+  </material>
+  <material name="green">
+    <color rgba="0 1 0 1"/>
+  </material>
+
+  <link name="base_footprint">
+  </link>
+
+  <gazebo reference="base_link">
+    <material>Gazebo/Green</material>
+  </gazebo>
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <box size="0.10 0.10 0.05" />
+      </geometry>
+      <material name="green"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="0.10 0.10 0.05" />
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="4.5" />
+      <inertia ixx="4.6875e-3" iyy="4.6875e-3" izz="7.5e-3" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+  </link>
+
+  <gazebo reference="laser_link">
+    <material>Gazebo/Red</material>
+  </gazebo>
+  <link name="laser_link">
+    <visual>
+      <geometry>
+        <cylinder length="0.05" radius="0.05" />
+      </geometry>
+      <material name="red"/>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="0.05" radius="0.05" />
+      </geometry>
+    </collision>
+    <inertial>
+      <mass value="0.01" />
+      <inertia ixx="8.33e-6" iyy="8.33e-6" izz="1.25e-7" ixy="0" ixz="0" iyz="0" />
+    </inertial>
+  </link>
+
+  <joint name="base_joint" type="fixed">
+    <origin xyz="0.0 0.0 0.025" rpy="0.0 0.0 0.0" />
+    <parent link="base_footprint" />
+    <child link="base_link" />
+    <axis xyz="0 0 1" />
+  </joint>
+
+  <joint name="laser_joint" type="fixed">
+    <origin xyz="0.0 0.0 0.05" rpy="0.0 0.0 0.0" />
+    <parent link="base_link" />
+    <child link="laser_link" />
+    <axis xyz="0 0 1" />
+  </joint>
+
+
+  <gazebo reference="laser_link">
+    <static>true</static>
+    <sensor type="ray" name="head_hokuyo_sensor"> 
+      <pose>0 0 0 0 0 0</pose>
+      <visualize>true</visualize>
+      <update_rate>10</update_rate>
+      <ray>
+        <scan>
+          <horizontal>
+            <samples>360</samples>
+            <resolution>1</resolution>
+            <min_angle>-3.1415</min_angle>
+            <max_angle>3.1240</max_angle>
+          </horizontal>
+        </scan>
+        <range>
+          <min>0.20</min>
+          <max>10.0</max>
+          <resolution>0.01</resolution>
+        </range>
+      </ray>
+      <plugin name="laser_controller" filename="libgazebo_ros_laser.so">
+        <topicName>scan</topicName>
+        <frameName>laser_link</frameName>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+  <gazebo>
+    <plugin name="object_controller" filename="libgazebo_ros_planar_move.so">
+      <commandTopic>cmd_vel</commandTopic>
+      <odometryTopic>odom</odometryTopic>
+      <odometryFrame>odom</odometryFrame>
+      <odometryRate>20.0</odometryRate>
+      <robotBaseFrame>base_footprint</robotBaseFrame>
+    </plugin>
+  </gazebo>
+
+</robot>

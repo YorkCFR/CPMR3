@@ -1,0 +1,12 @@
+<launch>
+  <group ns="robot1">
+  <param name="robot_description" command="$(find xacro)/xacro name:='camera_robot1' '$(find cpmr_ch5)/urdf/scout-camera.urdf.xacro'" />
+  <node name="rsp1" type="robot_state_publisher" pkg="robot_state_publisher" />
+  <node name="spawn_urdf2" pkg="gazebo_ros" type="spawn_model" args="-unpause -param robot_description -urdf -model camera_robot1 -x 0 -y 0"/>
+  </group>
+  <group ns="robot2">
+  <param name="robot_description" command="$(find xacro)/xacro name:='camera_robot' '$(find cpmr_ch5)/urdf/scout-camera.urdf.xacro'" />
+  <node name="rsp2" type="robot_state_publisher" pkg="robot_state_publisher" />
+  <node name="spawn_urdf2" pkg="gazebo_ros" type="spawn_model" args="-unpause -param robot_description -urdf -model camera_robot2 -x 0 -y 2"/>
+  </group>
+</launch>

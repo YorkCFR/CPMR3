@@ -1,0 +1,29 @@
+<?xml version="1.0"?>
+<package format="2">
+  <name>cpmr_ch5</name>
+  <version>0.0.0</version>
+  <description>The cpmr_ch5 package</description>
+
+  <maintainer email="jenkin@todo.todo">jenkin</maintainer>
+
+
+  <license>TODO</license>
+
+
+  <url type="website">http://michaeljenkin.info.yorku.ca</url>
+
+  <buildtool_depend>catkin</buildtool_depend>
+  <build_depend>rospy</build_depend>
+  <build_depend>sensor_msgs</build_depend>
+  <build_depend>std_msgs</build_depend>
+  <build_depend>gazebo_msgs</build_depend>
+  <build_export_depend>rospy</build_export_depend>
+  <build_export_depend>sensor_msgs</build_export_depend>
+  <build_export_depend>std_msgs</build_export_depend>
+  <build_export_depend>gazebo_msgs</build_export_depend>
+  <exec_depend>rospy</exec_depend>
+  <exec_depend>sensor_msgs</exec_depend>
+  <exec_depend>std_msgs</exec_depend>
+  <exec_depend>gazebo_msgs</exec_depend>
+
+</package>

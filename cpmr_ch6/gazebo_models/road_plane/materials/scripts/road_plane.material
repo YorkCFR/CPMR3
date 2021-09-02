@@ -1,0 +1,15 @@
+material road_plane/Diffuse
+{
+  technique
+  {
+    pass
+    {
+      texture_unit
+      {
+        texture road_plane.jpg
+        filtering anistropic
+        max_anisotropy 16
+      }
+    }
+  }
+}

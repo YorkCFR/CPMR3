@@ -1,0 +1,8 @@
+<launch>
+
+<include file="$(find urdf_tutorial)/launch/display.launch" >
+  <arg name="model" 	value="$(find cpmr_apb)/urdf/blockrobot.urdf" />
+  <arg name="gui"	value="False" />
+</include>
+
+</launch>
