@@ -1,0 +1,4 @@
+[console_scripts]
+depopulate_world = cpmr_apb.depopulate:main
+populate_world = cpmr_apb.populate:main
+

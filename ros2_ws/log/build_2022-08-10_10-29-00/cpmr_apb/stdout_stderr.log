@@ -1,0 +1,21 @@
+running egg_info
+writing ../../build/cpmr_apb/cpmr_apb.egg-info/PKG-INFO
+writing dependency_links to ../../build/cpmr_apb/cpmr_apb.egg-info/dependency_links.txt
+writing entry points to ../../build/cpmr_apb/cpmr_apb.egg-info/entry_points.txt
+writing requirements to ../../build/cpmr_apb/cpmr_apb.egg-info/requires.txt
+writing top-level names to ../../build/cpmr_apb/cpmr_apb.egg-info/top_level.txt
+reading manifest file '../../build/cpmr_apb/cpmr_apb.egg-info/SOURCES.txt'
+writing manifest file '../../build/cpmr_apb/cpmr_apb.egg-info/SOURCES.txt'
+running build
+running build_py
+running install
+running install_lib
+running install_data
+copying launch/gazebo.launch.py -> /home/jenkin/CPMR3/ros2_ws/install/cpmr_apb/share/cpmr_apb
+running install_egg_info
+removing '/home/jenkin/CPMR3/ros2_ws/install/cpmr_apb/lib/python3.8/site-packages/cpmr_apb-1.0.0-py3.8.egg-info' (and everything under it)
+Copying ../../build/cpmr_apb/cpmr_apb.egg-info to /home/jenkin/CPMR3/ros2_ws/install/cpmr_apb/lib/python3.8/site-packages/cpmr_apb-1.0.0-py3.8.egg-info
+running install_scripts
+Installing depopulate_world script to /home/jenkin/CPMR3/ros2_ws/install/cpmr_apb/lib/cpmr_apb
+Installing populate_world script to /home/jenkin/CPMR3/ros2_ws/install/cpmr_apb/lib/cpmr_apb
+writing list of installed files to '/home/jenkin/CPMR3/ros2_ws/build/cpmr_apb/install.log'

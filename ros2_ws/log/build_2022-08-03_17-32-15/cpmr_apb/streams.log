@@ -1,0 +1,21 @@
+[0.519s] Invoking command in '/home/jenkin/CPMR3/ros2_ws/src/cpmr_apb': PYTHONPATH=/home/jenkin/CPMR3/ros2_ws/install/cpmr_apb/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/cpmr_apb build --build-base /home/jenkin/CPMR3/ros2_ws/build/cpmr_apb/build install --prefix /home/jenkin/CPMR3/ros2_ws/install/cpmr_apb --record /home/jenkin/CPMR3/ros2_ws/build/cpmr_apb/install.log --single-version-externally-managed
+[0.706s] running egg_info
+[0.706s] writing ../../build/cpmr_apb/cpmr_apb.egg-info/PKG-INFO
+[0.707s] writing dependency_links to ../../build/cpmr_apb/cpmr_apb.egg-info/dependency_links.txt
+[0.707s] writing entry points to ../../build/cpmr_apb/cpmr_apb.egg-info/entry_points.txt
+[0.707s] writing requirements to ../../build/cpmr_apb/cpmr_apb.egg-info/requires.txt
+[0.707s] writing top-level names to ../../build/cpmr_apb/cpmr_apb.egg-info/top_level.txt
+[0.729s] reading manifest file '../../build/cpmr_apb/cpmr_apb.egg-info/SOURCES.txt'
+[0.729s] writing manifest file '../../build/cpmr_apb/cpmr_apb.egg-info/SOURCES.txt'
+[0.729s] running build
+[0.729s] running build_py
+[0.729s] running install
+[0.730s] running install_lib
+[0.731s] running install_data
+[0.731s] copying launch/blockrobot.launch.py -> /home/jenkin/CPMR3/ros2_ws/install/cpmr_apb/share/cpmr_apb
+[0.731s] running install_egg_info
+[0.732s] removing '/home/jenkin/CPMR3/ros2_ws/install/cpmr_apb/lib/python3.8/site-packages/cpmr_apb-0.0.0-py3.8.egg-info' (and everything under it)
+[0.732s] Copying ../../build/cpmr_apb/cpmr_apb.egg-info to /home/jenkin/CPMR3/ros2_ws/install/cpmr_apb/lib/python3.8/site-packages/cpmr_apb-0.0.0-py3.8.egg-info
+[0.733s] running install_scripts
+[0.743s] writing list of installed files to '/home/jenkin/CPMR3/ros2_ws/build/cpmr_apb/install.log'
+[0.755s] Invoked command in '/home/jenkin/CPMR3/ros2_ws/src/cpmr_apb' returned '0': PYTHONPATH=/home/jenkin/CPMR3/ros2_ws/install/cpmr_apb/lib/python3.8/site-packages:${PYTHONPATH} /usr/bin/python3 setup.py egg_info --egg-base ../../build/cpmr_apb build --build-base /home/jenkin/CPMR3/ros2_ws/build/cpmr_apb/build install --prefix /home/jenkin/CPMR3/ros2_ws/install/cpmr_apb --record /home/jenkin/CPMR3/ros2_ws/build/cpmr_apb/install.log --single-version-externally-managed

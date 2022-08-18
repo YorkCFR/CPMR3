@@ -1,0 +1,35 @@
+running egg_info
+creating ../../build/cpmr_ch4/cpmr_ch4.egg-info
+writing ../../build/cpmr_ch4/cpmr_ch4.egg-info/PKG-INFO
+writing dependency_links to ../../build/cpmr_ch4/cpmr_ch4.egg-info/dependency_links.txt
+writing entry points to ../../build/cpmr_ch4/cpmr_ch4.egg-info/entry_points.txt
+writing requirements to ../../build/cpmr_ch4/cpmr_ch4.egg-info/requires.txt
+writing top-level names to ../../build/cpmr_ch4/cpmr_ch4.egg-info/top_level.txt
+writing manifest file '../../build/cpmr_ch4/cpmr_ch4.egg-info/SOURCES.txt'
+reading manifest file '../../build/cpmr_ch4/cpmr_ch4.egg-info/SOURCES.txt'
+writing manifest file '../../build/cpmr_ch4/cpmr_ch4.egg-info/SOURCES.txt'
+running build
+running build_py
+creating /home/jenkin/CPMR3/ros2_ws/build/cpmr_ch4/build
+creating /home/jenkin/CPMR3/ros2_ws/build/cpmr_ch4/build/lib
+creating /home/jenkin/CPMR3/ros2_ws/build/cpmr_ch4/build/lib/cpmr_ch4
+copying cpmr_ch4/__init__.py -> /home/jenkin/CPMR3/ros2_ws/build/cpmr_ch4/build/lib/cpmr_ch4
+copying cpmr_ch4/tester.py -> /home/jenkin/CPMR3/ros2_ws/build/cpmr_ch4/build/lib/cpmr_ch4
+running install
+running install_lib
+creating /home/jenkin/CPMR3/ros2_ws/install/cpmr_ch4/lib/python3.8/site-packages/cpmr_ch4
+copying /home/jenkin/CPMR3/ros2_ws/build/cpmr_ch4/build/lib/cpmr_ch4/__init__.py -> /home/jenkin/CPMR3/ros2_ws/install/cpmr_ch4/lib/python3.8/site-packages/cpmr_ch4
+copying /home/jenkin/CPMR3/ros2_ws/build/cpmr_ch4/build/lib/cpmr_ch4/tester.py -> /home/jenkin/CPMR3/ros2_ws/install/cpmr_ch4/lib/python3.8/site-packages/cpmr_ch4
+byte-compiling /home/jenkin/CPMR3/ros2_ws/install/cpmr_ch4/lib/python3.8/site-packages/cpmr_ch4/__init__.py to __init__.cpython-38.pyc
+byte-compiling /home/jenkin/CPMR3/ros2_ws/install/cpmr_ch4/lib/python3.8/site-packages/cpmr_ch4/tester.py to tester.cpython-38.pyc
+running install_data
+creating /home/jenkin/CPMR3/ros2_ws/install/cpmr_ch4/share/ament_index
+creating /home/jenkin/CPMR3/ros2_ws/install/cpmr_ch4/share/ament_index/resource_index
+creating /home/jenkin/CPMR3/ros2_ws/install/cpmr_ch4/share/ament_index/resource_index/packages
+copying resource/cpmr_ch4 -> /home/jenkin/CPMR3/ros2_ws/install/cpmr_ch4/share/ament_index/resource_index/packages
+copying package.xml -> /home/jenkin/CPMR3/ros2_ws/install/cpmr_ch4/share/cpmr_ch4
+running install_egg_info
+Copying ../../build/cpmr_ch4/cpmr_ch4.egg-info to /home/jenkin/CPMR3/ros2_ws/install/cpmr_ch4/lib/python3.8/site-packages/cpmr_ch4-0.0.0-py3.8.egg-info
+running install_scripts
+Installing tester script to /home/jenkin/CPMR3/ros2_ws/install/cpmr_ch4/lib/cpmr_ch4
+writing list of installed files to '/home/jenkin/CPMR3/ros2_ws/build/cpmr_ch4/install.log'
