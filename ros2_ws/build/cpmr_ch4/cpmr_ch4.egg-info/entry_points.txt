@@ -1,3 +1,0 @@
-[console_scripts]
-tester = cpmr_ch4.tester:main
-

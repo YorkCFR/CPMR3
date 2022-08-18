@@ -1,5 +1,0 @@
-  File "/home/jenkin/CPMR3/ros2_ws/install/cpmr_apb/lib/python3.8/site-packages/cpmr_apb/depopulate.py", line 7
-    os.system(f"ros2 service call /delete_entity 'gazebo_msgs/DeleteEntity' '{{name: \"can_{id}\"}}')
-                                                                                                    ^
-SyntaxError: EOL while scanning string literal
-

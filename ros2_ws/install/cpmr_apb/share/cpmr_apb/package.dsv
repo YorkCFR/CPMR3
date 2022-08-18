@@ -1,6 +1,0 @@
-source;share/cpmr_apb/hook/pythonpath.ps1
-source;share/cpmr_apb/hook/pythonpath.dsv
-source;share/cpmr_apb/hook/pythonpath.sh
-source;share/cpmr_apb/hook/ament_prefix_path.ps1
-source;share/cpmr_apb/hook/ament_prefix_path.dsv
-source;share/cpmr_apb/hook/ament_prefix_path.sh
