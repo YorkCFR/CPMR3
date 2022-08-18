@@ -1,0 +1,295 @@
+<?xml version="1.0"?>
+<!-- 
+	This is a differential drive robot badly 
+        modelled after the Nomadic Superscout
+        robot.
+
+        This robot has an IMU integrated on top of the sonar unit
+        
+        If the robot weighs about 10kg, the density (assuming no input from wheels and caster)
+        V=36x40x30 cm^3 + 3.14 x 18^2 x 8 = 51339cm^3 or density is .1948 g/cm^3
+
+        base is 36x40x30 x 0.1948 = 8.4kg
+        sonar is 3.14x18^2x8 x 0.1948 = 1.6kg
+        each wheel is 0.01kg
+        each part of the caster is 0.01kg
+
+	Version 1.0.
+	Copyright (c) Michael Jenkin and Gregory Dudek.
+
+	-->
+
+
+
+
+<robot name="$(arg name)" xmlns:xacro="http://www.ros.org/wiki/xacro">
+
+  <!-- Define the robot -->
+  <xacro:property name="robot_base_width" value="0.36" />
+  <xacro:property name="robot_base_length" value="0.4" />
+  <xacro:property name="robot_base_height" value="0.3" />
+  <xacro:property name="robot_base_mass" value="4.5" />
+  <xacro:property name="robot_sonar_radius" value="0.18" />
+  <xacro:property name="robot_sonar_height" value="0.08" />
+  <xacro:property name="robot_wheel_zoffset" value="-0.06" />
+  <xacro:property name="robot_wheel_xoffset" value="0.08" />
+  <xacro:property name="robot_wheel_radius" value="0.14" />
+  <xacro:property name="robot_wheel_width" value="0.02" />
+  <xacro:property name="robot_caster_link_height" value="0.03" />
+  <xacro:property name="robot_caster_link_width" value="0.03" />
+  <xacro:property name="robot_caster_link_length" value="0.05" />
+  <xacro:property name="robot_caster_link_offset" value="-0.025" />
+  <xacro:property name="robot_caster_joint_offset" value="-0.15" />
+  <xacro:property name="robot_caster_wheel_radius" value="0.02" />
+  <xacro:property name="imu_width" value="0.02" />
+  <xacro:property name="imu_height" value="0.02" />
+  <xacro:property name="imu_length" value="0.02" />
+
+  <!-- Import colors defined externally -->
+  <xacro:include filename="$(find cpmr_ch4)/urdf/colors.xacro" />
+
+  <!-- Define macros to make moments of inertia easier -->
+  <xacro:macro name="I_cylinder" params="m r h">
+    <inertial>
+      <mass value="${m}" />
+      <inertia  ixx="${m*(3*r*r+h*h)/12}" iyy="${m*(3*r*r+h*h)/12}" izz="${m*r*r/2}"
+              ixy = "0" ixz = "0" iyz = "0" />
+    </inertial>
+  </xacro:macro>
+  <xacro:macro name="I_cuboid" params="m x y z">
+    <inertial>
+      <mass value="${m}" />
+      <inertia  ixx="${m*(y*y+z*z)/12}" iyy="${m*(x*x+z*z)/12}" izz="${m*(x*x+z*z)/12}"
+                ixy = "0" ixz = "0" iyz = "0" />
+    </inertial>
+  </xacro:macro>
+
+  <!-- robot footprint -->
+  <link name="base_footprint">
+  </link>
+
+  <!-- Base -->
+  <gazebo reference="base_link">
+    <material>Gazebo/Blue</material>
+  </gazebo>
+  <link name="base_link">
+    <visual>
+      <geometry>
+        <box size="${robot_base_length} ${robot_base_width} ${robot_base_height}" />
+      </geometry>
+      <material name="blue"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="${robot_base_length} ${robot_base_width} ${robot_base_height}" />
+      </geometry>
+    </collision>
+    <xacro:I_cuboid m="8.4" x="${robot_base_length}" y="${robot_base_width}" z="${robot_base_height}" />
+  </link>
+
+  <!-- Sonar unit -->
+  <gazebo reference="sonar_link">
+    <material>Gazebo/Blue</material>
+  </gazebo>
+  <link name="sonar_link">
+    <visual>
+      <geometry>
+        <cylinder length="${robot_sonar_height}" radius="${robot_sonar_radius}" />
+      </geometry>
+      <material name="blue"/>
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="${robot_sonar_height}" radius="${robot_sonar_radius}" />
+      </geometry>
+    </collision>
+    <xacro:I_cylinder m="8.4" r="${robot_sonar_radius}" h="${robot_sonar_height}" />
+  </link>
+
+  <joint name="base_joint" type="fixed">
+    <origin xyz="0.0 0.0 ${robot_wheel_radius-robot_wheel_zoffset}" rpy="0.0 0.0 0.0" />
+    <parent link="base_footprint" />
+    <child link="base_link" />
+    <axis xyz="0 0 1" />
+  </joint>
+
+  <joint name="sonar_joint" type="fixed">
+    <origin xyz="0.0 0.0 ${robot_base_height/2+robot_sonar_height/2}" rpy="0.0 0.0 0.0" />
+    <parent link="base_link" />
+    <child link="sonar_link" />
+    <axis xyz="0 0 1" />
+  </joint>
+
+  <!-- Left wheel -->
+  <gazebo reference="left_wheel_link">
+    <material>Gazebo/Red</material>
+  </gazebo>
+  <link name="left_wheel_link">
+    <visual>
+      <geometry>
+        <cylinder length="${robot_wheel_width}" radius="${robot_wheel_radius}" />
+      </geometry>
+      <material name="red" />
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="${robot_wheel_width}" radius="${robot_wheel_radius}" />
+      </geometry>
+    </collision>
+    <xacro:I_cylinder m="0.1" r="${robot_wheel_radius}" h="${robot_wheel_width}" />
+  </link>
+
+  <joint name="left_wheel_joint" type="continuous">
+    <axis xyz="0 0 1" />
+    <parent link="base_link" />
+    <child link="left_wheel_link" />
+    <origin rpy="-1.5708 0 0" xyz="${robot_wheel_xoffset} ${robot_base_width/2+robot_wheel_width/2} ${robot_wheel_zoffset}" />
+  </joint>
+
+  <!-- Right wheel -->
+  <gazebo reference="right_wheel_link">
+    <material>Gazebo/Green</material>
+  </gazebo>
+  <link name="right_wheel_link">
+    <visual>
+      <geometry>
+        <cylinder length="${robot_wheel_width}" radius="${robot_wheel_radius}" />
+      </geometry>
+      <material name="green" />
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="${robot_wheel_width}" radius="${robot_wheel_radius}" />
+      </geometry>
+    </collision>
+    <xacro:I_cylinder m="0.1" r="${robot_wheel_radius}" h="${robot_wheel_width}" />
+  </link>
+
+  <joint name="right_wheel_joint" type="continuous">
+    <axis xyz="0 0 1" />
+    <parent link="base_link" />
+    <child link="right_wheel_link" />
+    <origin rpy="-1.5708 0 0" xyz="${robot_wheel_xoffset} ${-robot_base_width/2-robot_wheel_width/2} ${robot_wheel_zoffset}" />
+  </joint>
+
+  <!-- Caster 'wheel' structure -->
+  <gazebo reference="caster_link">
+    <material>Gazebo/Silver</material>
+  </gazebo>
+
+  <link name="caster_link">
+    <visual>
+      <origin xyz="${robot_caster_link_length/2} 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="${robot_caster_link_length} ${robot_caster_link_width} ${robot_caster_link_height}" />
+      </geometry>
+      <material name="silver"/>
+    </visual>
+    <collision>
+      <origin xyz="${robot_caster_link_length/2} 0 0" rpy="0 0 0" />
+      <geometry>
+        <box size="${robot_caster_link_length} ${robot_caster_link_width} ${robot_caster_link_height}" />
+      </geometry>
+    </collision>
+    <xacro:I_cuboid m="0.1" x="${robot_caster_link_length}" y="${robot_caster_link_width}" z="${robot_caster_link_height}" />
+  </link>
+
+  <joint name="caster_joint" type="continuous">
+    <axis xyz="0 0 1" />
+    <parent link="base_link" />
+    <child link="caster_link" />
+    <origin rpy="0 0 3.1415" xyz="${robot_caster_joint_offset} 0 ${-robot_base_height/2-robot_caster_link_height/2}" />
+  </joint>
+
+
+  <!-- caster wheel -->
+  <gazebo reference="caster_wheel_link">
+    <material>Gazebo/Silver</material>
+  </gazebo>
+  <link name="caster_wheel_link">
+    <visual>
+      <geometry>
+        <cylinder length="${robot_caster_link_height}" radius="${robot_caster_wheel_radius}" />
+      </geometry>
+      <material name="silver" />
+    </visual>
+    <collision>
+      <geometry>
+        <cylinder length="${robot_caster_link_height}" radius="${robot_caster_wheel_radius}" />
+      </geometry>
+    </collision>
+    <xacro:I_cylinder m="0.1" r="${robot_caster_wheel_radius}" h="${robot_caster_link_height}" />
+  </link>
+
+  <joint name="caster_wheel_joint" type="continuous">
+    <axis xyz="0 0 1" />
+    <child link="caster_wheel_link" />
+    <parent link="caster_link" />
+    <origin rpy="1.5708 0 0" xyz="${robot_caster_link_length} 0 ${-robot_caster_link_height/2}" />
+  </joint>
+
+  <!-- IMU unit -->
+  <gazebo reference="imu_link">
+    <material>Gazebo/Red</material>
+  </gazebo>
+  <link name="imu_link">
+    <visual>
+      <geometry>
+        <box size="${imu_length} ${imu_width} ${imu_height}" />
+      </geometry>
+      <material name="red"/>
+    </visual>
+    <collision>
+      <geometry>
+        <box size="${imu_length} ${imu_width} ${imu_height}" />
+      </geometry>
+    </collision>
+    <xacro:I_cuboid m="0.01" x="${imu_length}" y="${imu_width}" z="${imu_height}" />
+  </link>
+
+  <joint name="imu_joint" type="fixed">
+    <origin xyz="0.0 0.0 ${robot_sonar_height/2+imu_height/2}" rpy="0.0 0.0 0.0" />
+    <parent link="sonar_link" />
+    <child link="imu_link" />
+    <axis xyz="0 0 1" />
+  </joint>
+
+  <gazebo reference="imu_link">
+    <gravity>true</gravity>
+    <sensor name="imu_sensor" type="imu">
+      <always_on>true</always_on>
+      <update_rate>100</update_rate>
+      <pos>0 0 0 0 0 0</pos>
+      <plugin name="imu_publisher" filename="libgazebo_ros_imu_sensor.so">
+        <topicName>imu</topicName>
+        <body_name>imu_link</body_name>
+        <updateRateHZ>10</updateRateHZ>
+        <gaussianNoise>0.0</gaussianNoise>
+        <xyzOffset>0 0 0</xyzOffset>
+        <rpyOffset>0 0 0</rpyOffset>
+        <frameName>imu_link</frameName>
+        <initialOrientationAsReference>false</initialOrientationAsReference>
+      </plugin>
+    </sensor>
+  </gazebo>
+
+  <gazebo>
+    <plugin name="joint_state_publisher" filename="libgazebo_ros_joint_state_publisher.so">
+      <jointName>caster_wheel_joint, caster_joint</jointName>
+    </plugin>
+  </gazebo>
+ 
+  <gazebo>
+    <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
+      <alwaysOn>true</alwaysOn>
+      <legacyMode>false</legacyMode>
+      <updateRate>20</updateRate>
+      <leftJoint>left_wheel_joint</leftJoint>
+      <rightJoint>right_wheel_joint</rightJoint>
+      <robotBaseFrame>base_footprint</robotBaseFrame>
+      <wheelSeparation>${robot_base_width+robot_wheel_width}</wheelSeparation>
+      <wheelDiameter>${2*robot_wheel_radius}</wheelDiameter>
+      <publishWheelJointState>true</publishWheelJointState>
+    </plugin>
+  </gazebo>
+</robot>
