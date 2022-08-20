@@ -1,9 +1,8 @@
-import os
 from glob import glob
+import os
 from setuptools import setup
 
-
-package_name = 'cpmr_ch4'
+package_name = 'cpmr_ch5'
 
 setup(
     name=package_name,
