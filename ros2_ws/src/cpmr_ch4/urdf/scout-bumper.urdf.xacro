@@ -47,7 +47,8 @@
   <xacro:property name="bumper_height" value="0.06" />
 
   <!-- Import colors defined externally -->
-  <xacro:include filename="$(find cpmr_ch4)/urdf/colors.xacro" />
+<!--  <xacro:include filename="$(find cpmr_ch4)/urdf/colors.xacro" /> -->
+  <xacro:include filename="$(find cpmr_ch4)/colors.xacro" />
 
   <xacro:macro name="I_cylinder" params="m r h">
     <inertial>
@@ -280,6 +281,17 @@
     <axis xyz="0 0 1" />
   </joint>
 
+  <gazebo>
+    <plugin name="joint_state_publisher" filename="libgazebo_ros_joint_state_publisher.so">
+      <update_rate>100</update_rate>
+      <joint_name>caster_wheel_joint</joint_name>
+      <joint_name>caster_joint</joint_name>
+      <joint_name>left_wheel_joint</joint_name>
+      <joint_name>right_wheel_joint</joint_name>
+    </plugin>
+  </gazebo>
+
+
   <gazebo reference="bumper_link">
     <sensor name="bumper_sensor" type="contact">
       <alwaysOn>true</alwaysOn>
@@ -289,29 +301,26 @@
         <topic>bumper_contact_state</topic>
       </contact>
       <plugin name="gazebo_ros_bumper_controller" filename="libgazebo_ros_bumper.so">
-        <bumperTopicName>robot_bumper_contact_state</bumperTopicName>
-        <frameName>bumper_link</frameName>
+        <ros><remapping>bumper_states:=robot_bumper_contact_state</remapping></ros>
+        <frame_name>bumper_link</frame_name>
       </plugin>
     </sensor>
   </gazebo>
 
   <gazebo>
-    <plugin name="joint_state_publisher" filename="libgazebo_ros_joint_state_publisher.so">
-      <jointName>caster_wheel_joint, caster_joint</jointName>
-    </plugin>
-  </gazebo>
- 
-  <gazebo>
     <plugin name="differential_drive_controller" filename="libgazebo_ros_diff_drive.so">
-      <alwaysOn>true</alwaysOn>
-      <legacyMode>false</legacyMode>
-      <updateRate>20</updateRate>
-      <leftJoint>left_wheel_joint</leftJoint>
-      <rightJoint>right_wheel_joint</rightJoint>
+      <update_rate>20</update_rate>
+      <left_joint>left_wheel_joint</left_joint>
+      <right_joint>right_wheel_joint</right_joint>
       <robotBaseFrame>base_footprint</robotBaseFrame>
-      <wheelSeparation>${robot_base_width+robot_wheel_width}</wheelSeparation>
-      <wheelDiameter>${2*robot_wheel_radius}</wheelDiameter>
-      <publishWheelJointState>true</publishWheelJointState>
+      <wheel_separation>${robot_base_width+robot_wheel_width}</wheel_separation>
+      <wheel_diameter>${2*robot_wheel_radius}</wheel_diameter>
+      <publish_odom>true</publish_odom>
+      <publish_odom_tf>true</publish_odom_tf>
+      <publish_wheel_tf>true</publish_wheel_tf>
+      <odometry_frame>odom</odometry_frame>
+      <robot_base_frame>base_footprint</robot_base_frame>
+      <command_topic>cmd_vel</command_topic>
     </plugin>
   </gazebo>
 </robot>
