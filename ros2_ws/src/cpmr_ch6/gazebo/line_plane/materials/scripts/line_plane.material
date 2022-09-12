@@ -1,0 +1,15 @@
+material line_plane/Diffuse
+{
+  technique
+  {
+    pass
+    {
+      texture_unit
+      {
+        texture line_plane.jpg
+        filtering anistropic
+        max_anisotropy 16
+      }
+    }
+  }
+}

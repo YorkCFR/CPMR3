@@ -8,8 +8,8 @@ from launch_ros.actions import Node
 import xacro
 
 def generate_launch_description():
-    urdf = os.path.join(get_package_share_directory('cpmr_ch5'), 'scout-camera.urdf.xacro')
-    robot_desc = xacro.process_file(urdf, mappings={'name' : 'camera_robot'}).toxml()
+    urdf = os.path.join(get_package_share_directory('cpmr_ch6'), 'scout-line-follower.urdf.xacro')
+    robot_desc = xacro.process_file(urdf, mappings={'name' : 'road_follower_robot'}).toxml()
 
     return LaunchDescription([
         IncludeLaunchDescription(
@@ -30,6 +30,6 @@ def generate_launch_description():
              executable='spawn_entity.py',
              name='urdf_spawner',
              output='screen',
-             arguments=["-topic", "/robot_description",  "-entity",  "camera_robot"]),
+             arguments=["-topic", "/robot_description",  "-entity",  "road_follower_robot"]),
     ])
 

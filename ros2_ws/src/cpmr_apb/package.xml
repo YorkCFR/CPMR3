@@ -2,8 +2,8 @@
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
   <name>cpmr_apb</name>
-  <version>1.0.0</version>
-  <description>Simulated robot for CPMR</description>
+  <version>0.3.0</version>
+  <description>CPMR 3rd Edition Appendix B</description>
   <maintainer email="jenkin@yorku.ca">Michael Jenkin</maintainer>
   <license>MIT License</license>
 
