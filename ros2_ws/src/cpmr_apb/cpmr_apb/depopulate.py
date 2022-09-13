@@ -16,8 +16,8 @@ def remove_can(node, id):
    future = client.call_async(request)
    rclpy.spin_until_future_complete(node, future)
    node.get_logger().info("...done")
-   if future.success is not None:
-       node.get_logger().info(f"Failure |{future.status_message}|")
+   if not future.result().success:
+       node.get_logger().info(f"Failure |{future.result()}|")
    
 
 def main(args=None):
