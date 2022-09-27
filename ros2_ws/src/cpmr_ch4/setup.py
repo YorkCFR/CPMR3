@@ -7,7 +7,7 @@ package_name = 'cpmr_ch4'
 
 setup(
     name=package_name,
-    version='1.0.0',
+    version='3.0.0',
     packages=[package_name],
     data_files=[
         ('share/ament_index/resource_index/packages',
@@ -21,11 +21,12 @@ setup(
     zip_safe=True,
     maintainer='jenkin',
     maintainer_email='michaeljenkin@me.com',
-    description='TODO: Package description',
-    license='TODO: License declaration',
+    description='Code associated with Chapter 4 of CPMR 3rd Edition',
+    license='MIT License',
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+            'collect_lidar = cpmr_ch4.collect_lidar:main',
         ],
     },
 )
