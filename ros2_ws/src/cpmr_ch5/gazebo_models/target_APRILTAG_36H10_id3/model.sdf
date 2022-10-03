@@ -1,0 +1,30 @@
+<?xml version="1.0" ?>
+<sdf version="1.5">
+  <model name="target_APRILTAG_36H10_id3">
+    <static>true</static>
+    <link name="link">
+      <pose>0 0 0 0 0 0</pose>
+      <collision name="collision">
+        <geometry>
+          <box>
+            <size>0.01 0.20 0.20</size>
+          </box>
+        </geometry>
+      </collision>
+      <visual name="visual">
+        <geometry>
+          <box>
+            <size>0.01 0.20 0.20</size>
+          </box>
+        </geometry>
+        <material>
+          <script>
+            <uri>model://target_APRILTAG_36H10_id3/materials/scripts</uri>
+            <uri>model://target_APRILTAG_36H10_id3/materials/textures</uri>
+            <name>target_APRILTAG_36H10_id3/Diffuse</name>
+          </script>
+        </material>
+      </visual>
+    </link>
+  </model>
+</sdf>
