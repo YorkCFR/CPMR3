@@ -6,7 +6,7 @@ package_name = 'cpmr_ch6'
 
 setup(
     name=package_name,
-    version='0.0.1',
+    version='3.0.0',
     packages=[package_name],
     data_files=[
         ('share/ament_index/resource_index/packages', ['resource/' + package_name]),
@@ -18,12 +18,14 @@ setup(
     install_requires=['setuptools'],
     zip_safe=True,
     maintainer='Michael Jenkin',
-    maintainer_email='michaeljenkin@me.com',
-    description='TODO: Package description',
-    license='TODO: License declaration',
+    maintainer_email='jenkin@yorku.ca',
+    description='Material for CPMR 3rd Edition - Chapter 6',
+    license='MIT License',
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+            'drive_by_line = cpmr_ch6.drive_by_line:main',
+            'auto_drive_by_line = cpmr_ch6.auto_drive_by_line:main',
         ],
     },
 )

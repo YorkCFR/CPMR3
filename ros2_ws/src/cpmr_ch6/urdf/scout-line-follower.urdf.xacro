@@ -44,7 +44,7 @@
   <xacro:property name="robot_camera_length" value="0.02" />
   <xacro:property name="robot_camera_width" value="0.02" />
   <xacro:property name="robot_camera_height" value="0.02" />
-  <xacro:property name="robot_camera_xoffset" value="0.16" />
+  <xacro:property name="robot_camera_offset" value="0.04" />
 
   <!-- Import colors defined externally -->
   <xacro:include filename="$(find cpmr_ch6)/colors.xacro" />
@@ -143,7 +143,7 @@
   </link>
 
   <joint name="camera_joint" type="fixed">
-    <origin xyz="${robot_base_length/2+robot_camera_length/2} 0.0 ${-robot_base_height/2}" rpy="0.0 1.57 0.0" />
+    <origin xyz="${robot_base_length/2+robot_camera_length/2+robot_camera_offset} 0.0 ${-robot_base_height/2}" rpy="0.0 1.57 0.0" />
     <parent link="base_link" />
     <child link="camera_link" />
     <axis xyz="0 0 1" />
@@ -160,7 +160,7 @@
           <height>480</height>
         </image>
         <clip>
-          <near>0.05</near>
+          <near>0.01</near>
           <far>50.0</far>
         </clip>
       </camera>
