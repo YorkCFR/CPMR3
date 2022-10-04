@@ -26,6 +26,10 @@ setup(
     entry_points={
         'console_scripts': [
             'aruco_target = cpmr_ch5.aruco_target:main',
+            'view_camera = cpmr_ch5.view_camera:main',
+            'canny_edges = cpmr_ch5.canny_edges:main',
+            'good_features = cpmr_ch5.good_features:main',
+            'harris_corners = cpmr_ch5.harris_corners:main',
         ],
     },
 )
