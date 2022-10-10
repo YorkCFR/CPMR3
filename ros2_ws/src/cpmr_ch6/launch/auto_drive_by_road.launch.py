@@ -9,7 +9,7 @@ import xacro
 
 def generate_launch_description():
     urdf = os.path.join(get_package_share_directory('cpmr_ch6'), 'scout-camera.urdf.xacro')
-    robot_desc = xacro.process_file(urdf, mappings={'name' : 'road_follower_robot'}).toxml()
+    robot_desc = xacro.process_file(urdf, mappings={'name' : 'sonar_robot'}).toxml()
 
     return LaunchDescription([
         IncludeLaunchDescription(
@@ -30,12 +30,11 @@ def generate_launch_description():
              executable='spawn_entity.py',
              name='urdf_spawner',
              output='screen',
-             arguments=["-topic", "/robot_description",  "-entity",  "road_follower_robot"]),
+             arguments=["-topic", "/robot_description",  "-entity",  "camera_robot"]),
         Node(
              package='cpmr_ch6',
-             executable='drive_by_road',
-             name='drive_by_road',
+             executable='auto_drive_by_road',
+             name='auto_drive_by_road',
              output='screen'),
-
     ])
 

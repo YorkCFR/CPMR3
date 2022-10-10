@@ -26,6 +26,8 @@ setup(
         'console_scripts': [
             'drive_by_line = cpmr_ch6.drive_by_line:main',
             'auto_drive_by_line = cpmr_ch6.auto_drive_by_line:main',
+            'drive_by_road = cpmr_ch6.drive_by_road:main',
+            'auto_drive_by_road = cpmr_ch6.auto_drive_by_road:main',
         ],
     },
 )

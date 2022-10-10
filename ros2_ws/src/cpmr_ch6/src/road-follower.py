@@ -8,9 +8,9 @@ from keras.layers.core import Activation, Flatten, Dense
 from keras import backend as K
 from keras.preprocessing.image import ImageDataGenerator
 from keras.preprocessing.image import img_to_array
-from keras.optimizers import Adam
+from tensorflow.keras.optimizers import Adam
 from sklearn.model_selection import train_test_split
-from keras.utils import to_categorical
+from tensorflow.keras.utils import to_categorical
 from keras.callbacks import TensorBoard
 from imutils import paths
 import numpy as np
@@ -67,9 +67,9 @@ for imagePath in imagePaths:
     # labels list
     label = imagePath.split(os.path.sep)[-2]
     print(label)
-    if label == 'forward':
+    if label == 'left':
         label = 0
-    elif label == 'right':
+    elif label == 'forward':
         label = 1
     else:
         label =2
@@ -92,7 +92,7 @@ tensorboard_callback = TensorBoard(log_dir=logdir)
 
 # initialize the number of epochs to train for, initial learning rate,
 # and batch size
-EPOCHS = 15
+EPOCHS = 100
 INIT_LR = 1e-3
 BS = 32
 # initialize the model
