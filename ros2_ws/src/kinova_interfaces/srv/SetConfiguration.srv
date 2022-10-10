@@ -1,0 +1,4 @@
+float32[] joints  # joint angles in degrees
+---
+bool status       # success or failure
+
