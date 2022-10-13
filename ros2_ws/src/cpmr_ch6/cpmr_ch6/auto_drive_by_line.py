@@ -1,6 +1,5 @@
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2' # disable information messages
-from keras.preprocessing.image import img_to_array
 from keras.models import load_model
 import math
 import numpy as np

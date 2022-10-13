@@ -1,5 +1,6 @@
+from packaging import version
 import tensorflow as tf
-if tf.__version__ < "2.9.0":
+if version.parse(tf.__version__) < version.parse("2.9.0"):
     from keras.preprocessing.image import img_to_array
 else:
     from tensorflow.keras.utils import img_to_array

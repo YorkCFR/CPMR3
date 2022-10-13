@@ -2,13 +2,14 @@
 # This network is based on the Line Follower Robot using CNN by Nawaz Ahmad
 # towardsdatascience.com
 #
+from packaging import version
 import tensorflow as tf
 from keras.models import Sequential
 from keras.layers.convolutional import Conv2D, MaxPooling2D 
 from keras.layers.core import Activation, Flatten, Dense
 from keras import backend as K
 from keras.preprocessing.image import ImageDataGenerator
-if tf.__version__ < "2.9.0":
+if version.parse(tf.__version__) < version.parse("2.9.0"):
     from keras.preprocessing.image import img_to_array
 else:
     from tensorflow.keras.utils import img_to_array

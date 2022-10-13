@@ -1,6 +1,11 @@
 import os
 os.environ['TF_CPP_MIN_LOG_LEVEL'] = '2' # disable information messages
-from keras.preprocessing.image import img_to_array
+from packaging import version
+import tensorflow as tf
+if version.parse(tf.__version__) < version.parse("2.9.0"):
+    from keras.preprocessing.image import img_to_array
+else:
+    from tensorflow.keras.utils import img_to_array
 from keras.models import load_model
 import math
 import numpy as np
