@@ -1,4 +1,8 @@
-from keras.preprocessing.image import img_to_array
+import tensorflow as tf
+if tf.__version__ < "2.9.0":
+    from keras.preprocessing.image import img_to_array
+else:
+    from tensorflow.keras.utils import img_to_array
 from keras.models import load_model
 from imutils import paths
 import numpy as np
