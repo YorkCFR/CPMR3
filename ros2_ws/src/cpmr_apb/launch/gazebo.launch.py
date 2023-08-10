@@ -23,7 +23,7 @@ def generate_launch_description():
              executable='robot_state_publisher',
              name='robot_state_publisher',
              output='screen',
-             parameters=[{'use_sim_time': 'false', 'robot_description': robot_desc}],
+             parameters=[{'use_sim_time': False, 'robot_description': robot_desc}],
              arguments=[urdf]),
         Node(
              package='gazebo_ros',
