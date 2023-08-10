@@ -2,10 +2,10 @@
 <?xml-model href="http://download.ros.org/schema/package_format3.xsd" schematypens="http://www.w3.org/2001/XMLSchema"?>
 <package format="3">
   <name>cpmr_ch12</name>
-  <version>0.0.0</version>
-  <description>TODO: Package description</description>
-  <maintainer email="michaeljenkin@me.com">jenkin</maintainer>
-  <license>TODO: License declaration</license>
+  <version>0.3.1</version>
+  <description>ROS2 code associated with Chapter 12</description>
+  <maintainer email="jenkin@yorku.ca">jenkin</maintainer>
+  <license>MIT License</license>
 
   <test_depend>ament_copyright</test_depend>
   <test_depend>ament_flake8</test_depend>
