@@ -41,10 +41,10 @@ class MoveToGoal(Node):
         self._goal_y = 0.0
         self._goal_t = 0.0
 
+        self.add_on_set_parameters_callback(self.parameter_callback)
         self.declare_parameter('goal_x', value=self._goal_x)
         self.declare_parameter('goal_y', value=self._goal_y)
         self.declare_parameter('goal_t', value=self._goal_t)
-        self.add_on_set_parameters_callback(self.parameter_callback)
 
         self._subscriber = self.create_subscription(Odometry, "/odom", self._listener_callback, 1)
         self._publisher = self.create_publisher(Twist, "/cmd_vel", 1)
@@ -84,6 +84,7 @@ class MoveToGoal(Node):
             else:
                 self.get_logger().warn(f'Invalid parameter {param.name}')
                 return SetParametersResult(successful=False)
+            self.get_logger().warn(f"Changing goal {self._goal_x} {self._goal_y} {self._goal_t}")
         return SetParametersResult(successful=True)
 
 
