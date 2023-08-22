@@ -23,7 +23,7 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
-            'drive_robot = cpmr_ch2.drive_to_goal:main',
+            'drive_to_goal = cpmr_ch2.drive_to_goal:main',
             'add_obstacle = cpmr_ch2.add_obstacle:main',
             'build_map = cpmr_ch2.build_map:main',
             'destroy_map = cpmr_ch2.destroy_map:main',
