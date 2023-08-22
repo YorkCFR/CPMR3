@@ -6,7 +6,7 @@ package_name = 'cpmr_ch2'
 
 setup(
     name=package_name,
-    version='3.0.0',
+    version='3.1.0',
     packages=[package_name],
     data_files=[
         ('share/ament_index/resource_index/packages', ['resource/' + package_name]),
@@ -17,7 +17,7 @@ setup(
     install_requires=['setuptools'],
     zip_safe=True,
     maintainer='jenkin',
-    maintainer_email='michaeljenkin@me.com',
+    maintainer_email='jenkin@yorku.ca',
     description='Code associated with Chapter 2 of CPMR 3rd Edition',
     license='MIT License',
     tests_require=['pytest'],

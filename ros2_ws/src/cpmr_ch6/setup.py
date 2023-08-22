@@ -6,7 +6,7 @@ package_name = 'cpmr_ch6'
 
 setup(
     name=package_name,
-    version='3.0.0',
+    version='3.1.0',
     packages=[package_name],
     data_files=[
         ('share/ament_index/resource_index/packages', ['resource/' + package_name]),
@@ -19,7 +19,7 @@ setup(
     zip_safe=True,
     maintainer='Michael Jenkin',
     maintainer_email='jenkin@yorku.ca',
-    description='Material for CPMR 3rd Edition - Chapter 6',
+    description='Code associated with Chapter 6 of CPMR 3rd Edition',
     license='MIT License',
     tests_require=['pytest'],
     entry_points={

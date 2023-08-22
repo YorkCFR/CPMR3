@@ -6,7 +6,7 @@ package_name = 'cpmr_ch5'
 
 setup(
     name=package_name,
-    version='3.0.0',
+    version='3.1.0',
     packages=[package_name],
     data_files=[
         ('share/ament_index/resource_index/packages',
