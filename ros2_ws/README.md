@@ -1,6 +1,6 @@
 The ROS2 tools here depend on
 
-* ros2-humble-desktop - basic foxy install
+* ros2-humble-desktop - basic humble install
 * python3-colcon-common-extensions - colcon
 * python3-opencv - opencv
 * ros-humble-navigation2 - nav2 library

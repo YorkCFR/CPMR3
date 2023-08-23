@@ -3,7 +3,7 @@ These are packages associated with the chapters in CPMR 3rd Edition.  To build j
 colcon build --packages-select <list of packages>
 
 * cpmr_apb  Files associated with the tutorial information that can be found at the root of this repository.
-* cpmr_ch2 
+* cpmr_ch2  Files assoicated with chapter 2. 
 * cpmr_ch4
 * cpmr_ch5
 * cpmr_ch6
