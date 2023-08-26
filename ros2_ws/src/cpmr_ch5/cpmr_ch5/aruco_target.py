@@ -7,6 +7,7 @@ import cv2
 from cv_bridge import CvBridge, CvBridgeError
 from sensor_msgs.msg import Image
 from sensor_msgs.msg import CameraInfo
+from packaging.version import parse
 
 class ArucoTarget(Node):
     _DICTS = {
@@ -52,8 +53,13 @@ class ArucoTarget(Node):
         if dict is None:
             self.get_logger().error(f'ARUCO tag set {tag_set} not found')
         else:
-            self._aruco_dict = cv2.aruco.Dictionary_get(dict)
-            self._aruco_param = cv2.aruco.DetectorParameters_create()
+            if parse(cv2.__version__) < parse('4.7.0'):
+                self._aruco_dict = cv2.aruco.Dictionary_get(dict)
+                self._aruco_param = cv2.aruco.DetectorParameters_create()
+            else:
+                self._aruco_dict = cv2.aruco.getPredefinedDictionary(dict)
+                self._aruco_param = cv2.aruco.DetectorParameters()
+                self._aruco_detector = cv2.aruco.ArucoDetector(self._aruco_dict, self._aruco_param)
             self._target_width = target_width
             self._image = None
             self._cameraMatrix = None
@@ -69,7 +75,10 @@ class ArucoTarget(Node):
         self._image = self._bridge.imgmsg_to_cv2(msg, "bgr8") 
 
         grey = cv2.cvtColor(self._image, cv2.COLOR_BGR2GRAY)
-        corners, ids, rejectedImgPoints = cv2.aruco.detectMarkers(grey, self._aruco_dict)
+        if parse(cv2.__version__) < parse('4.7.0'):
+            corners, ids, rejectedImgPoints = cv2.aruco.detectMarkers(grey, self._aruco_dict)
+        else:
+            corners, ids, rejectedImgPoints = self._aruco_detector.detectMarkers(grey)
         frame = cv2.aruco.drawDetectedMarkers(self._image, corners, ids)
         if ids is None:
             self.get_logger().info(f"No targets found!")
@@ -78,7 +87,14 @@ class ArucoTarget(Node):
             self.get_logger().info(f"We have not yet received a camera_info message")
             return
 
-        rvec, tvec, _objPoints = cv2.aruco.estimatePoseSingleMarkers(corners, self._target_width, self._cameraMatrix, self._distortion)
+        if parse(cv2.__version__) < parse('4.7.0'):
+            rvec, tvec, _objPoints = cv2.aruco.estimatePoseSingleMarkers(corners, self._target_width, self._cameraMatrix, self._distortion)
+        else:
+            self.get_logger().info(f"corners {corners}")
+            result = self._image.copy()
+            cv2.imshow('window', result)
+            cv2.waitKey(3)
+            return
         result = self._image.copy()
         for r,t in zip(rvec,tvec):
             self.get_logger().info(f"Found a target at {t} rotation {r}")
