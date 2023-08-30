@@ -20,8 +20,6 @@
   <xacro:property name="show_video" value="$(arg show_video)" />
   <xacro:arg name="robot_name" default="chair" />
   <xacro:property name="robot_name" value="$(arg name)" />
-  <xacro:arg name="target" default="apriltag_36h10_0" />
-  <xacro:property name="target" value="$(arg target)" />
   <xacro:property name="robot_base_width" value="0.556" />
   <xacro:property name="robot_base_length" value="0.504" />
   <xacro:property name="robot_base_height" value="0.762" />
@@ -42,14 +40,9 @@
   <xacro:property name="robot_camera_height" value="0.02" />
   <xacro:property name="robot_camera_xoffset" value="-0.4" />
   <xacro:property name="robot_camera_zoffset" value="1.1" />
-  <xacro:property name="target_width" value="0.45" />
-  <xacro:property name="target_length" value="0.01" />
-  <xacro:property name="target_height" value="0.60" />
-  <xacro:property name="target_xoffset" value="-0.45" />
-  <xacro:property name="target_zoffset" value="-0.3" />
 
   <!-- Import colors defined externally -->
-  <xacro:include filename="$(find chair)/colors.xacro" />
+  <xacro:include filename="$(find cpmr_ch11)/colors.xacro" />
 
   <!-- Define macros to make moments of inertia easier -->
   <xacro:macro name="I_cylinder" params="m r h">
@@ -76,7 +69,7 @@
     <visual>
       <origin rpy="1.57 0 -1.57" xyz="-0.3 0.0 0.4" />
       <geometry>
-        <mesh filename="$(find chair)/emptychair.obj" scale="0.001 0.001 0.001"/>
+        <mesh filename="$(find cpmr_ch11)/emptychair.obj" scale="0.001 0.001 0.001"/>
       </geometry>
     </visual>
     <collision>
