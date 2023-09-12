@@ -13,8 +13,8 @@ def generate_launch_description():
         DeclareLaunchArgument('goal_t', default_value = '0.0', description = 'goal (t)'),
         Node(
             package = 'cpmr_ch2',
-            executable = 'drive_robot',
-            name = 'drive_robot',
+            executable = 'drive_to_goal',
+            name = 'drive_to_goal',
             parameters = [
                 {'goal_x' : LaunchConfiguration('goal_x')},
                 {'goal_y' : LaunchConfiguration('goal_y')},
