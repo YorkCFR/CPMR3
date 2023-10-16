@@ -24,7 +24,7 @@ class YOLO_Pose(Node):
         super().__init__('pose_node')
 
         # params
-        self._model_file = os.path.join(get_package_share_directory('chair_pose'), 'yolov8n-pose.pt') 
+        self._model_file = os.path.join(get_package_share_directory('cpmr_ch12'), 'yolov8n-pose.pt') 
         self.declare_parameter("model", self._model_file) 
         model = self.get_parameter("model").get_parameter_value().string_value
 
