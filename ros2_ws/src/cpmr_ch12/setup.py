@@ -7,19 +7,20 @@ setup(
     version='3.1.0',
     packages=[package_name],
     data_files=[
-        ('share/ament_index/resource_index/packages',
-            ['resource/' + package_name]),
+        ('share/ament_index/resource_index/packages', ['resource/' + package_name]),
         ('share/' + package_name, ['package.xml']),
     ],
     install_requires=['setuptools'],
     zip_safe=True,
     maintainer='jenkin',
     maintainer_email='jenkin@yorku.ca',
-    description='COde associated with Chapter 12 of CPMR 3rd Edition',
+    description='Code associated with Chapter 12 of CPMR 3rd Edition',
     license='MIT License',
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+        'opencv_camera = cpmr_ch12.opencv_camera:main',
+        'yolo_pose = cpmr_ch12.yolo_pose:main',
         ],
     },
 )
