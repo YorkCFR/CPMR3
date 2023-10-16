@@ -9,5 +9,6 @@ colcon build --packages-select <list of packages>
 * cpmr_ch6
 * cpmr_ch7
 * cpmr_ch11
-* cpmr_ch12
+* cpmr_ch12 Files associated with chapter 12. Note that some of the files here require ultralytics to be installed (pip install -U ultralytics)
+* 
 
