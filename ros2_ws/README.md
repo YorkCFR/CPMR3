@@ -12,3 +12,6 @@ Note that (at present) building this package in ros2 humble with the default too
 PYTHONWARNINGS="ignore:setup.py install is deprecated::setuptools.command.install"; export PYTHONWARNINGS
 
 to your environment.
+
+If you accessed this from CUP, you will have received this as a large tar or zip archive. You should also be able to find this repository on GitHub. The GitHub version may be updated from the version provided by CUP.
+
