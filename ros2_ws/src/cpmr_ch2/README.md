@@ -1,6 +1,7 @@
 This package supports a simple block robot
-* gazebo.launch.py - This launches a simple block robot at the origin in gazebo. Note: this is a copy of the launch file provided in cpmr_ap
+* gazebo.launch.py - This launches a simple block robot at the origin in gazebo. Note: this is a copy of the launch file provided in cpmr_apb
 * build_map.launch.py - This populates the world from a map defined as a json file of cylinders. Note: this only loads json files copied/built into the installation directory.
+
 Different maps can be loaded through the map parameter
 * destroy_map.launch.py - Undoes what build_map.launch.py does
 
@@ -17,7 +18,3 @@ Note that goals must be floating point values.
 Once running you can change a goal by setting the parameter.For example, to set the x goal to 1.0
 
 ros2 param set /move_robot_to_goal goal_x 1.0
-
-
-
-

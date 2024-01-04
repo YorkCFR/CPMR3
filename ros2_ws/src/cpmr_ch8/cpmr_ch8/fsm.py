@@ -55,42 +55,56 @@ class FSM(Node):
         self._cur_state = FSM_STATES.AT_START
         self._start_time = self.get_clock().now().nanoseconds * 1e-9
 
-    def _drive_to_goal(self, goal_x, goal_y, goal_theta):
+    def _drive_to_goal(self, goal_x, goal_y, goal_theta,
+                       heading0_tol = 0.1,
+                       heading0_v = 0.05,
+                       range_tol = 0.1,
+                       range_v = 0.1,
+                       heading1_tol = 0.1,
+                       heading1_v = 0.05):
+        """Return True iff we are at the goal, otherwise drive there"""
+
         self.get_logger().info(f'{self.get_name()} drive to goal')
         twist = Twist()
 
         x_diff = goal_x - self._cur_x
         y_diff = goal_y - self._cur_y
-        dist = x_diff * x_diff + y_diff * y_diff
-        self.get_logger().info(f'{self.get_name()} {x_diff} {y_diff}')
+        dist = math.sqrt(x_diff * x_diff + y_diff * y_diff)
 
         # turn to the goal
         heading = math.atan2(y_diff, x_diff)
-        if abs(self._cur_theta - heading) > math.pi/20: 
-            if heading > self._cur_theta:
-                twist.angular.z = 0.2
-            else:
-               twist.angular.z = -0.2
-            self.get_logger().info(f'{self.get_name()} turning towards goal')
+        diff = heading - self._cur_theta
+        if diff > math.pi:
+            diff = diff - 2 * math.pi
+        if diff < -math.pi:
+            diff = diff + 2 * math.pi
+        if abs(diff) > heading0_tol:
+            twist.angular.z = math.copysign(heading0_v, diff)
+            self.get_logger().info(f'{self.get_name()} turning towards goal diff {diff} {twist.angular.z}')
             self._publisher.publish(twist)
             return False
 
         # pointing the right direction, so go there
-        if dist > 0.1*0.1:
-            twist.linear.x = 0.3
+        if dist > range_tol:
+            twist.linear.x = range_v
             self._publisher.publish(twist)
-            self.get_logger().info(f'{self.get_name()} driving to goal')
+            self.get_logger().info(f'{self.get_name()} driving to goal dist {dist} {twist.linear.x}')
             return False
 
         # we are there, set the correct angle
-        if abs(goal_theta - self._cur_theta) > math.pi/20: 
-            if goal_theta > self._cur_theta:
-                twist.angular.z = 0.005
-            else:
-               twist.angular.z = -0.005
-            self.get_logger().info(f'{self.get_name()} turning to goal direction')
+        diff = goal_theta - self._cur_theta
+        if diff > math.pi:
+            diff = diff - 2 * math.pi
+        if diff < -math.pi:
+            diff = diff + 2 * math.pi
+        if abs(diff) > heading1_tol:
+            twist.angular.z = math.copysign(heading1_v, diff)
+            self.get_logger().info(f'{self.get_name()} turning to goal {goal_theta} {twist.angular.z}')
             self._publisher.publish(twist)
+            return False
+
         self.get_logger().info(f'{self.get_name()} at goal pose')
+        self._publisher.publish(twist)
         return True
 
 
@@ -102,7 +116,7 @@ class FSM(Node):
 
     def _do_state_heading_to_task(self):
         self.get_logger().info(f'{self.get_name()} heading to task {self._cur_x} {self._cur_y} {self._cur_theta}')
-        if self._drive_to_goal(2, 2, math.pi/2):
+        if self._drive_to_goal(2, 1, math.pi/2, heading1_tol = math.pi * 2): # don't care about final orientation
             self._cur_state = FSM_STATES.RETURNING_FROM_TASK
 
     def _do_state_returning_from_task(self):
