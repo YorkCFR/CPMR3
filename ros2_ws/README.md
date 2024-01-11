@@ -7,6 +7,10 @@ The ROS2 tools here depend on
 * ros-humble-nav2-bringup - nav2 bringup tools
 * ros-humble-xacro - support for xacro
 
+You will need have these installed prior to many of the packages building successfully.
+
+Some modules require other packages and pip installable libraries. Details can be found in the README associated with each chapter. In order to keep individual chapters independing, you will find some code/models duplicated across chapters. 
+
 Note that (at present) building this package in ros2 humble with the default tools will produce a deprecated warning message related to revisions in setuptools and the ros2 humble package structure. You can avoid seeing these warning by adding
 
 PYTHONWARNINGS="ignore:setup.py install is deprecated::setuptools.command.install"; export PYTHONWARNINGS
