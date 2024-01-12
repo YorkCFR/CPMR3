@@ -9,6 +9,24 @@ from sensor_msgs.msg import Image
 from sensor_msgs.msg import CameraInfo
 from packaging.version import parse
 
+if parse(cv2.__version__) >= parse('4.7.0'):
+    def local_estimatePoseSingleMarkers(corners, marker_size, mtx, distortion):
+        marker = np.array([[-marker_size /2, marker_size / 2, 0],
+                           [marker_size /2, marker_size / 2, 0],
+                           [marker_size /2, -marker_size / 2, 0],
+                           [-marker_size /2, -marker_size / 2, 0]],
+                           dtype = np.float32)
+        trash = []
+        rvecs = []
+        tvecs = []
+        for c in corners:
+            nada, R, t = cv2.solvePnP(marker, c, mtx, distortion, False, cv2.SOLVEPNP_IPPE_SQUARE)
+            rvecs.append(R)
+            tvecs.append(t)
+            trash.append(nada)
+        return rvecs, tvecs, trash
+
+
 class ArucoTarget(Node):
     _DICTS = {
         "4x4_100" : cv2.aruco.DICT_4X4_100,
@@ -90,15 +108,14 @@ class ArucoTarget(Node):
         if parse(cv2.__version__) < parse('4.7.0'):
             rvec, tvec, _objPoints = cv2.aruco.estimatePoseSingleMarkers(corners, self._target_width, self._cameraMatrix, self._distortion)
         else:
-            self.get_logger().info(f"corners {corners}")
-            result = self._image.copy()
-            cv2.imshow('window', result)
-            cv2.waitKey(3)
-            return
+            rvec, tvec, _objPoints = local_estimatePoseSingleMarkers(corners, self._target_width, self._cameraMatrix, self._distortion)
         result = self._image.copy()
         for r,t in zip(rvec,tvec):
             self.get_logger().info(f"Found a target at {t} rotation {r}")
-            result = cv2.aruco.drawAxis(result, self._cameraMatrix, self._distortion, r, t, self._target_width)
+            if parse(cv2.__version__) < parse('4.7.0'):
+                result = cv2.aruco.drawAxis(result, self._cameraMatrix, self._distortion, r, t, self._target_width)
+            else:
+                result = cv2.drawFrameAxes(result, self._cameraMatrix, self._distortion, r, t, self._target_width)
         cv2.imshow('window', result)
         cv2.waitKey(3)
 

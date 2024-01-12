@@ -2,7 +2,6 @@ import math
 import numpy as np
 import rclpy
 from rclpy.node import Node
-from rclpy.parameter import Parameter
 from nav_msgs.msg import Odometry
 from sensor_msgs.msg import LaserScan
 from geometry_msgs.msg import Twist, Pose, Point, Quaternion

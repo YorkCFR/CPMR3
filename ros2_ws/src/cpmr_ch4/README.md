@@ -6,4 +6,7 @@ Chapter 4 provides the following launch files
 * lidar-collector.launch.py - This launches a LIDAR data collection node (and assumes that laser-robot.launch.py is already running)
 * sonar-robot.launch.py - This launches a SONAR equipped differential drive robot in an empty Gazebo world
 
+Robots can be driven around using a standard teleoperational node
+
+
 

@@ -20,7 +20,6 @@ class ViewCamera(Node):
 
     def _image_callback(self, msg):
         image = self._bridge.imgmsg_to_cv2(msg, "bgr8")
-
         cv2.imshow('image', image)
         cv2.waitKey(3)
 
