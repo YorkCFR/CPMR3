@@ -11,7 +11,7 @@ ros2 run cpmr_ch2 drive_robot
 
 or pass a desired initial goal using
 
-ros2 run cpmr_ch2 drive_robot --ros-args -p goal_x=1.0 goal_y=2.0 goal_t=1.5
+ros2 run cpmr_ch2 drive_to_goal --ros-args -p goal_x=1.0 goal_y=2.0 goal_t=1.5
 
 Note that goals must be floating point values.
 
