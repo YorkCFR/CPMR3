@@ -6,7 +6,7 @@ package_name = 'cpmr_ch11'
 
 setup(
     name=package_name,
-    version='0.3.0',
+    version='0.3.1',
     packages=find_packages(exclude=['test']),
     data_files=[
         ('share/ament_index/resource_index/packages', ['resource/' + package_name]),
@@ -18,7 +18,7 @@ setup(
     zip_safe=True,
     maintainer='jenkin',
     maintainer_email='jenkin@yorku.ca',
-    description='PMR 3rd Edition Chapter 11',
+    description='CPMR 3rd Edition Chapter 11',
     license='MIT License',
     tests_require=['pytest'],
     entry_points={

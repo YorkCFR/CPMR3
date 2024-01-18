@@ -3,8 +3,6 @@
 	This is a differential drive robot badly 
         modelled after the wheelchair
 
-        This robot has a camera
-        
 	Version 1.2a.
 	-->
 
@@ -35,11 +33,6 @@
   <xacro:property name="robot_caster_joint_offset" value="${robot_base_length/2}" />
   <xacro:property name="robot_caster_wheel_radius" value="0.098" />
   <xacro:property name="robot_caster_wheel_width" value="0.02" />
-  <xacro:property name="robot_camera_length" value="0.02" />
-  <xacro:property name="robot_camera_width" value="0.02" />
-  <xacro:property name="robot_camera_height" value="0.02" />
-  <xacro:property name="robot_camera_xoffset" value="-0.4" />
-  <xacro:property name="robot_camera_zoffset" value="1.1" />
 
   <!-- Import colors defined externally -->
   <xacro:include filename="$(find cpmr_ch11)/colors.xacro" />
@@ -87,57 +80,6 @@
     <axis xyz="0 0 1" />
   </joint>
 
-
-  <!-- Cameraunit -->
-  <gazebo reference="camera_link">
-    <material>Gazebo/Green</material>
-  </gazebo>
-  <link name="camera_link">
-    <visual>
-      <geometry>
-        <box size="${robot_camera_length} ${robot_camera_width} ${robot_camera_height}" />
-      </geometry>
-      <material name="green"/>
-    </visual>
-    <collision>
-      <geometry>
-        <box size="${robot_camera_length} ${robot_camera_width} ${robot_camera_height}" />
-      </geometry>
-    </collision>
-    <xacro:I_cuboid m="0.01" x="${robot_camera_length}" y="${robot_camera_width}" z="${robot_camera_height}" />
-  </link>
-
-  <joint name="camera_joint" type="fixed">
-    <origin xyz="${robot_camera_xoffset} 0.0 ${robot_camera_zoffset+robot_camera_height/2}" rpy="0 ${camera_tilt} 0" />
-    <parent link="base_link" />
-    <child link="camera_link" />
-    <axis xyz="0 0 1" />
-  </joint>
-
-  <gazebo reference="camera_link">
-    <sensor type="camera" name="camera"> 
-      <visualize>${show_video}</visualize>
-      <camera>
-        <horizontal_fov>${65 * 3.1415/180}</horizontal_fov>
-        <image>
-          <format>R8G8B8</format>
-          <width>640</width>
-          <height>480</height>
-        </image>
-        <clip>
-          <near>0.05</near>
-          <far>50.0</far>
-        </clip>
-      </camera>
-      <plugin name="camera_controller" filename="libgazebo_ros_camera.so">
-        <ros>
-          <namespace>/${robot_name}</namespace>
-        </ros>
-        <camera_name>camera</camera_name>
-        <frame_name>camera_link</frame_name>
-      </plugin>
-    </sensor>
-  </gazebo>
 
   <!-- Left wheel -->
   <link name="left_wheel">
