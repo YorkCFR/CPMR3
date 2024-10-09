@@ -17,20 +17,26 @@ class ViewCamera(Node):
         self._image_topic = self.get_parameter('image').get_parameter_value().string_value
         self.create_subscription(Image, self._image_topic, self._image_callback, 1)
         self._bridge = CvBridge()
+        self._frame_id = 0
 
     def _image_callback(self, msg):
         image = self._bridge.imgmsg_to_cv2(msg, "bgr8")
         cv2.imshow('image', image)
-        cv2.waitKey(3)
+        key = cv2.waitKey(3) & 0xff
+        if key == ord('s'):
+            self.get_logger().info(f'{self.get_name()} saving image {self._frame_id}')
+            cv2.imwrite(f'frame_{self._frame_id}.jpg', image)
+            self._frame_id = self._frame_id + 1
+      
 
 def main(args=None):
     rclpy.init(args=args)
     node = ViewCamera()
     try:
         rclpy.spin(node)
+        rclpy.shutdown()
     except KeyboardInterrupt:
         pass
-    rclpy.shutdown()
 
 if __name__ == '__main__':
     main()

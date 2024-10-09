@@ -30,6 +30,7 @@ setup(
             'good_features = cpmr_ch5.good_features:main',
             'harris_corners = cpmr_ch5.harris_corners:main',
             'opencv_camera = cpmr_ch5.opencv_camera:main',
+            'opencv_camera_calibrated = cpmr_ch5.opencv_camera_calibrated:main',
         ],
     },
 )
