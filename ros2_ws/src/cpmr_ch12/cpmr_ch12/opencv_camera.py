@@ -36,9 +36,9 @@ def main(args=None):
     node = OpenCVCamera()
     try:
         node.stream()
+        rclpy.shutdown()
     except KeyboardInterrupt:
         pass
-    rclpy.shutdown()
 
 if __name__ == '__main__':
     main()

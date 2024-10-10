@@ -19,11 +19,13 @@ setup(
     zip_safe=True,
     maintainer='jenkin',
     maintainer_email='jenkin@yorku.ca',
-    description='CPMR 3rd Edition Chpater 5',
+    description='CPMR 3rd Edition Chpater 12',
     license='MIT License',
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+            'yolo_pose = cpmr_ch12.yolo_pose:main',
+            'opencv_camera = cpmr_ch12.opencv_camera:main',
         ],
     },
 )
