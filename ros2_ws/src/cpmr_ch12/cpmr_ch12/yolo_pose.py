@@ -99,9 +99,9 @@ def main(args=None):
     node = YOLO_Pose()
     try:
         rclpy.spin(node)
+        rclpy.shutdown()
     except KeyboardInterrupt:
         pass
-    rclpy.shutdown()
 
 if __name__ == '__main__':
     main()
