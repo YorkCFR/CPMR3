@@ -8,6 +8,7 @@ from rcl_interfaces.msg import SetParametersResult
 from nav_msgs.msg import Odometry
 from geometry_msgs.msg import Twist, Pose, Point, Quaternion
 from nav_msgs.msg import Odometry
+from std_srvs.srv import SetBool
 
 def euler_from_quaternion(quaternion):
     """
@@ -47,6 +48,7 @@ class FSM(Node):
 
         self._subscriber = self.create_subscription(Odometry, "/odom", self._listener_callback, 1)
         self._publisher = self.create_publisher(Twist, "/cmd_vel", 1)
+        self.create_service(SetBool, '/startup', self._startup_callback)
 
         # the blackboard
         self._cur_x = 0.0
@@ -56,6 +58,22 @@ class FSM(Node):
         self._start_time = self.get_clock().now().nanoseconds * 1e-9
         self._points = [[0, 0, 0], [0, 5, 0], [5, 5, math.pi/2], [5, 0, -math.pi/2]]
         self._point = 0
+        self._run = False
+
+    def _startup_callback(self, request, resp):
+        self.get_logger().info(f'Got a request {request}')
+        if request.data:
+            self.get_logger().info(f'fsm starting')
+            self._run = True
+            resp.success = True
+            resp.message = "Architecture running"
+        else:
+            self.get_logger().info(f'fsm suspended')
+            self._run = True
+            resp.success = True
+            resp.message = "Architecture suspended"
+        return resp
+           
 
     def _short_angle(angle):
         if angle > math.pi:
@@ -110,26 +128,26 @@ class FSM(Node):
             self._publisher.publish(twist)
             return False
 
-        self.get_logger().info(f'{self.get_name()} at goal pose')
+        self.get_logger().info(f'at goal pose')
         self._publisher.publish(twist)
         return True
 
 
     def _do_state_at_start(self):
-        self.get_logger().info(f'{self.get_name()} in start state')
-        now = self.get_clock().now().nanoseconds * 1e-9
-        if now > (self._start_time + 2):
+        self.get_logger().info(f'in start state')
+        if self._run:
+            self.get_logger().info(f'Starting...')
             self._cur_state = FSM_STATES.HEADING_TO_TASK
 
     def _do_state_heading_to_task(self):
-        self.get_logger().info(f'{self.get_name()} heading to task {self._point}')
+        self.get_logger().info(f'heading to task {self._point}')
         if self._drive_to_goal(self._points[self._point][0], self._points[self._point][1], self._points[self._point][2]): 
             self._point = self._point + 1
             if self._point >= len(self._points):
                 self._cur_state = FSM_STATES.RETURNING_FROM_TASK
 
     def _do_state_returning_from_task(self):
-        self.get_logger().info(f'{self.get_name()} returning from task ')
+        self.get_logger().info(f'returning from task ')
         if self._drive_to_goal(0, 0, 0):
             self._publisher.publish(Twist())
             self._cur_state = FSM_STATES.TASK_DONE

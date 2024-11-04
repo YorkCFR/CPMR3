@@ -33,8 +33,8 @@ def generate_launch_description():
              arguments=["-topic", "/robot_description",  "-entity",  "camera_robot"]),
         Node(
              package='cpmr_ch8',
-             executable='view_camera',
-             name='view_camera',
+             executable='fsm',
+             name='fsm',
              output='screen'),
     ])
 
