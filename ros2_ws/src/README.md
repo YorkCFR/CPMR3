@@ -8,8 +8,9 @@ colcon build --packages-select <list of packages>
 * cpmr_ch5 Files associated with Chapter 5
 * cpmr_ch6 Files associated with Chapter 6
 * cpmr_ch7 Files associated with Chapter 7
-* cpmr_ch7 Files associated with Chapter 8
+* cpmr_ch8 Files associated with Chapter 8
 * cpmr_ch11 Files associated with Chapter 11
 * cpmr_ch12 Files associated with chapter 12. 
+
 Note that some of the files here require ultralytics to be installed (pip install -U ultralytics)
 

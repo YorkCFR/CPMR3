@@ -26,6 +26,7 @@ setup(
         'console_scripts': [
             'view_camera = cpmr_ch8.view_camera:main',
             'fsm = cpmr_ch8.fsm:main',
+            'subsumption = cpmr_ch8.subsumption:main',
         ],
     },
 )

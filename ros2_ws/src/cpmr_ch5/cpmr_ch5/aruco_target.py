@@ -52,7 +52,7 @@ class ArucoTarget(Node):
         "aruco_original" : cv2.aruco.DICT_ARUCO_ORIGINAL
     }
 
-    def __init__(self, tag_set="apriltag_36h10", target_width=0.20):
+    def __init__(self, tag_set="apriltag_36h10", target_width=0.30):
         super().__init__('aruco_target')
         self.get_logger().info(f'{self.get_name()} created')
 
@@ -122,7 +122,8 @@ class ArucoTarget(Node):
 
 def main(args=None):
     rclpy.init(args=args)
-    node = ArucoTarget()
+#    node = ArucoTarget()
+    node = ArucoTarget(tag_set="4x4_50", target_width=0.048)
     try:
         rclpy.spin(node)
         rclpy.shutdown()

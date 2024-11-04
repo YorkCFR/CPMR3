@@ -9,7 +9,7 @@ import numpy as np
 #
 n_col = 9
 n_row = 6
-square_size = 0.025 
+square_size = 0.023 
   
 criteria = (cv2.TERM_CRITERIA_EPS + cv2.TERM_CRITERIA_MAX_ITER, 30, 0.001) 
 
