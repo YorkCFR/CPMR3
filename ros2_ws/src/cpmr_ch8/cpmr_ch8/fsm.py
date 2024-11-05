@@ -9,6 +9,54 @@ from nav_msgs.msg import Odometry
 from geometry_msgs.msg import Twist, Pose, Point, Quaternion
 from nav_msgs.msg import Odometry
 from std_srvs.srv import SetBool
+from gazebo_msgs.srv import SpawnEntity, DeleteEntity
+
+
+
+def make_marker(node, id, x0, y0, h, r):
+   CYLINDER_MODEL = """
+       <sdf version="1.6"> 				\
+         <world name="default">                         \
+           <model name="obstacle"> 			\
+             <static>true</static> 			\
+             <link name="all">                        	\
+               <collision name="one">			\
+                 <pose>0 0 {o} 0 0 0</pose>    		\
+                 <geometry>				\
+                   <cylinder>                       	\
+                     <radius>0</radius>            	\
+                     <length>0</length>            	\
+                   </cylinder>   			\
+                  </geometry>				\
+               </collision>				\
+               <visual name="two">			\
+                 <pose>0 0 {o} 0 0 0</pose>    		\
+                 <geometry>				\
+                   <cylinder>                           \
+                     <radius>{r}</radius>               \
+                     <length>{h}</length>               \
+                   </cylinder>                          \
+                 </geometry>				\
+               </visual>				\
+             </link>                                    \
+           </model>					\
+         </world>                                       \
+       </sdf>"""
+
+   client = node.create_client(SpawnEntity, "/spawn_entity")
+   node.get_logger().info("Connecting to /spawn_entity service...")
+   client.wait_for_service()
+   node.get_logger().info("...connected")
+   request = SpawnEntity.Request()
+   request.name = id
+   request.initial_pose.position.x = float(x0)
+   request.initial_pose.position.y = float(y0)
+   request.initial_pose.position.z = float(0)
+   dict = {'h' : h, 'r':r, 'o': h/2}
+   request.xml = CYLINDER_MODEL.format(**dict)
+   node.get_logger().info(f"Making request...")
+   client.call_async(request)
+  
 
 def euler_from_quaternion(quaternion):
     """
@@ -49,6 +97,15 @@ class FSM(Node):
         self._subscriber = self.create_subscription(Odometry, "/odom", self._listener_callback, 1)
         self._publisher = self.create_publisher(Twist, "/cmd_vel", 1)
         self.create_service(SetBool, '/startup', self._startup_callback)
+        self.client = self.create_client(SpawnEntity, "/spawn_entity")
+        self.get_logger().info("Connecting to /spawn_entity service...")
+        self.client.wait_for_service()
+        self.get_logger().info("Connected")
+        self._last_x = 0.0
+        self._last_y = 0.0
+        self._last_id = 0
+
+        make_marker(self, "t"+str(self._last_id), self._last_x, self._last_y, 0.25, 0.01)
 
         # the blackboard
         self._cur_x = 0.0
@@ -169,6 +226,13 @@ class FSM(Node):
 
     def _listener_callback(self, msg):
         pose = msg.pose.pose
+
+        d2 = (pose.position.x - self._last_x) * (pose.position.x - self._last_x) + (pose.position.y - self._last_y) * (pose.position.y - self._last_y)
+        if d2 > 0.5 * 0.5:
+             self._last_id = self._last_id + 1
+             self._last_x = pose.position.x
+             self._last_y = pose.position.y
+             make_marker(self, "t"+str(self._last_id), self._last_x, self._last_y, 0.25, 0.01)
 
         roll, pitch, yaw = euler_from_quaternion(pose.orientation)
         self._cur_x = pose.position.x
