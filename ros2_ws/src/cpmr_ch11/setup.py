@@ -23,6 +23,8 @@ setup(
     tests_require=['pytest'],
     entry_points={
         'console_scripts': [
+            'follow_chair = cpmr_ch11.follow_chair:main',
+            'leader_chair = cpmr_ch11.leader_chair:main',
         ],
     },
 )
