@@ -75,7 +75,8 @@ class FSM(Node):
             resp.message = "Architecture running"
         else:
             self.get_logger().info(f'fsm suspended')
-            self._run = True
+            self._publisher.publish(Twist())
+            self._run = False
             resp.success = True
             resp.message = "Architecture suspended"
         return resp
@@ -135,6 +136,8 @@ class FSM(Node):
             self._cur_state = FSM_STATES.PERFORMING_TASK
 
     def _do_state_performing_task(self):
+        if not self._run:
+            return
         self.get_logger().info(f'heading to task {self._point}')
         if self._drive_to_goal(self._points[self._point][0], self._points[self._point][1]):
             self._point = self._point + 1

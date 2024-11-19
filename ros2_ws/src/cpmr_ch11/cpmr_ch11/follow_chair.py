@@ -81,7 +81,9 @@ class FollowChair(Node):
                 resp.success = False
                 resp.message = "In startup state"
             else:
-                self.get_logger().info(f'fsm suspended but not yet running?')
+                self._cur_state = FSM_STATES.SLEEPING
+                self._publisher.publish(Twist())
+                self.get_logger().info(f'fsm suspended')
                 resp.success = True
                 resp.message = "Architecture suspended"
         return resp
