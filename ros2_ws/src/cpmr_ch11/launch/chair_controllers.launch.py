@@ -45,7 +45,7 @@ def generate_launch_description():
                 executable='follow_chair',
                 name='follow_chair',
                 output='screen',
-                parameters=[{'chair_name' : f"chair_{chair}", 'target_chair' : f"chair{chair-1}"}])
+                parameters=[{'chair_name' : f"chair_{chair}", 'target_name' : f"chair_0"}]) # use chair_{chair-1}
         )
 
     return LaunchDescription(nodelist)
